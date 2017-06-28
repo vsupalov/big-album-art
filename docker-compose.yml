@@ -1,0 +1,22 @@
+version: '2'
+
+volumes:
+  # for persistence between restarts
+  postgres_data: {}
+
+services:
+  db:
+    #https://hub.docker.com/_/postgres/
+    image: postgres:9.6.3
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: dbpw
+    ports: #make db accessible locally
+      - "127.0.0.1:5432:5432"
+  redis:
+    #https://hub.docker.com/_/redis/
+    image: redis:3.2.9
+    ports: #make redis accessible locally
+      - "127.0.0.1:5432:5432"
