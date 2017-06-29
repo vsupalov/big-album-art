@@ -103,11 +103,17 @@ def start():
         return go_to_spotify()
 
     d = get_data(current_user.spotify_token)
+    if d == None:
+        return go_to_spotify()
+
     return render_template("main.html", **d)
 
 @app.route("/current/")
 def current():
     d = get_data(current_user.spotify_token)
+    if d == None:
+        return json.dumps({"error": "relogin"})
+
     return json.dumps(d)
 
 def get_data(spotify_token):
@@ -115,6 +121,10 @@ def get_data(spotify_token):
     headers = {'Authorization': "Bearer {}".format(spotify_token)}
     r = requests.get(url, headers=headers)
     parsed = json.loads(r.text)
+
+    # check if the token is still valid
+    if parsed.get("item", None) == None:
+        return None
 
     img_src = parsed["item"]["album"]["images"][0]["url"]
 
