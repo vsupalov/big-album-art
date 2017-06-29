@@ -47,6 +47,8 @@ export POSTGRES_PW="dbpw"
 export POSTGRES_DB="test"
 export REDIS_URL="127.0.0.1:6379"
 
+export LC_ALL="C.UTF-8"
+export LANG="C.UTF-8"
 ```
 
 ## Links
