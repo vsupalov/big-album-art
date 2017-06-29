@@ -105,7 +105,7 @@ def start():
     d = get_data(current_user.spotify_token)
     return render_template("main.html", **d)
 
-@app.route("/current")
+@app.route("/current/")
 def current():
     d = get_data(current_user.spotify_token)
     return json.dumps(d)
@@ -131,7 +131,7 @@ def get_data(spotify_token):
         "track_uri": parsed["item"]["uri"],
     }
 
-@app.route("/callback")
+@app.route("/callback/")
 def login_callback():
     code = request.args.get('code')
     error = request.args.get('error')
