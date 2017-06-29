@@ -63,6 +63,7 @@ Maybe someday:
 
 ## TODOs
 
+* Explanation screen with login button
 * check if the token has expired with a simple request, handle updating it gracefully
 * JS makes too many requests - something might be stacking up or carrying over
 * Maybe switch to using blueprints for the fun of it
