@@ -2,7 +2,7 @@
 
 set -e
 
-virtualenv -q /srv/env
+virtualenv -q -p /usr/bin/python3.5 /srv/env
 
 source /srv/env/bin/activate
 pip install -r requirements.txt
