@@ -9,13 +9,13 @@ RUN apt-get install -qqy \
     python3 \
     python3-dev
 
-RUN useradd app
+#RUN useradd app
 
 RUN mkdir -p /srv
 ADD start.sh /srv/start.sh
 RUN chmod +x /srv/start.sh
 
-RUN chown -R app:app /srv
+#RUN chown -R app:app /srv
+#USER app
 
-USER app
-ENTRYPOINT ["/srv/start.sh"]
+ENTRYPOINT ["/bin/bash", "/srv/start.sh"]
