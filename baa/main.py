@@ -19,17 +19,26 @@ def get_env_variable(name):
         message = "Expected environment variable '{}' not set.".format(name)
         raise Exception(message)
 
-# get env vars
+# get env vars OR ELSE
+POSTGRES_URL = get_env_variable("POSTGRES_URL") # 5432
+POSTGRES_USER = get_env_variable("POSTGRES_USER")
+POSTGRES_PW = get_env_variable("POSTGRES_PW")
+POSTGRES_DB = get_env_variable("POSTGRES_DB")
+REDIS_URL = get_env_variable("REDIS_URL") # 6379
+
 SPOTIFY_CLIENT_ID = get_env_variable("SPOTIFY_CLIENT_ID")
 SPOTIFY_CLIENT_SECRET = get_env_variable("SPOTIFY_CLIENT_SECRET")
 SPOTIFY_REDIRECT_URL = get_env_variable("SPOTIFY_REDIRECT_URL")
+
 SPOTIFY_SCOPES = "user-read-private user-read-email user-read-playback-state user-read-currently-playing"
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'redis'
+app.config['SESSION_REDIS'] = REDIS_URL
 app.secret_key = get_env_variable("SECRET_KEY")
 
-DB_URL = 'postgresql+psycopg2://postgres:dbpw@127.0.0.1:5432/test'
+DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=POSTGRES_USER,pw=POSTGRES_PW,url=POSTGRES_URL,db=POSTGRES_DB)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # silence the deprecation warning
 
