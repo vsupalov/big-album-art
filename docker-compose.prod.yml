@@ -11,6 +11,9 @@ services:
     image: postgres:9.6.3
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PW}
   redis:
     #https://hub.docker.com/_/redis/
     image: redis:3.2.9
@@ -20,5 +23,7 @@ services:
       - ./baa:/srv/app
       - env:/srv/env
     working_dir: /srv/app
+    env_file:
+      - .env
     ports: #make redis accessible locally
       - "127.0.0.1:9020:8000"
