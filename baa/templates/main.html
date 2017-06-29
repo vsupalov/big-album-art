@@ -1,0 +1,82 @@
+<title>Big Spotify Album Art</title>
+<link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=" rel="icon" type="image/x-icon" />
+
+<style>
+  body {
+    background: black;
+    text-align: center;
+    overflow: hidden;
+  }
+  .container {
+    margin-top: 1%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+  }
+  .image img {
+    height: 91%;
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+  .meta {
+    margin-top: 1%;
+    color: #444;
+    flex-grow: 0;
+    flex-shrink: 1;
+  }
+  .meta a {
+    font-size: 1em;
+  }
+</style>
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+<script>
+  $(document).ready(function() {
+    var CHANGE_CHECK_DELAY = 1000;
+
+    var track_is_playing = {{track_is_playing|lower}};
+    var track_ms_total = {{track_ms_total}};
+    var track_ms_progress = {{track_ms_progress}};
+
+    var track_uri = "{{track_uri}}";
+
+    // usually we want to reaload the page after the song is supposed to finish
+    var ms_left = track_ms_total-track_ms_progress;
+
+    // but if it's not, see every second if something happened
+    if (!track_is_playing) {
+      ms_left = 1000;
+    }
+
+    var reload = function() {location.reload();};
+
+    // check every second if the current track changed/is still playing?
+    var check_for_change = function() {
+      $.get("/current", "", function(data) {
+        if (data.track_uri != track_uri) {
+	  	reload();
+        } else if (data.track_is_playing != track_is_playing) {
+	      reload();
+	    } else {
+          setTimeout(check_for_change, CHANGE_CHECK_DELAY);
+        }
+	  }, "json");
+    }
+    setTimeout(check_for_change(), CHANGE_CHECK_DELAY);
+
+    setTimeout(reload, ms_left)
+    $(window).resize(reload);
+  });
+</script>
+
+<div class="container">
+  <div class="image">
+    <img src={{img_src}}>
+  </div>
+  <div class="meta">
+    <a>{{track_name}} by {% for artist in artists %}{{artist.name}} {% endfor %}({{album_name}})</a>
+  </div>
+</div>

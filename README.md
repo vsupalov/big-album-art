@@ -26,3 +26,11 @@ Access it on [localhost](localhost:5000)
 # install em with pip in the venv
 $ pip freeze --local > requirements.txt
 ```
+
+## Links
+
+* https://flask-admin.readthedocs.io/en/latest/
+* https://flask-login.readthedocs.io/en/latest/
+* https://pythonhosted.org/Flask-OAuth/
+* https://developer.spotify.com/web-api/authorization-guide/
+
