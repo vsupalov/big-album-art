@@ -6,3 +6,9 @@ run_deps:
 	docker-compose up -d
 run_prod:
 	docker-compose -f docker-compose.prod.yml up -d
+restart_prod:
+	docker-compose -f docker-compose.prod.yml down
+	docker-compose -f docker-compose.prod.yml build
+	docker-compose -f docker-compose.prod.yml up -d
+logs_prod:
+	docker-compose -f docker-compose.prod.yml logs
