@@ -19,4 +19,4 @@ services:
     #https://hub.docker.com/_/redis/
     image: redis:3.2.9
     ports: #make redis accessible locally
-      - "127.0.0.1:5432:5432"
+      - "127.0.0.1:6379:6379"
