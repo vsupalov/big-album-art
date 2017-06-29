@@ -13,7 +13,7 @@ On Ubuntu 16.04 you'll need the following additional packages:
 
 Install python dependencies with, preferably in a virtualenv
 ```
-$ pip install -r requirements.txt
+$ pip install -r baa/requirements.txt
 ```
 
 ## Develop
@@ -29,7 +29,7 @@ Access it on [localhost](localhost:5000)
 
 ```
 # install em with pip in the venv
-$ pip freeze --local > requirements.txt
+$ pip freeze --local > baa/requirements.txt
 ```
 
 ## Env Variables
