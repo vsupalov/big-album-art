@@ -10,7 +10,7 @@ RUN apt-get install -qqy \
 
 RUN useradd app
 
-ADD mkdir -p /srv
+RUN mkdir -p /srv
 ADD start.sh /srv/start.sh
 RUN chmod +x /srv/start.sh
 
