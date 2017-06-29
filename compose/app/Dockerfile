@@ -17,4 +17,4 @@ RUN chmod +x /srv/start.sh
 RUN chown -R app:app /srv
 
 USER app
-ENTRYPOINT [/srv/start.sh]
+ENTRYPOINT ["/srv/start.sh"]
