@@ -93,6 +93,7 @@ def get_spotify_login_link():
 
     redirect_url = furl(url)
     redirect_url.args = data
+    return redirect_url
 
 def go_to_spotify():
     redirect_url = get_spotify_login_link()
@@ -103,7 +104,7 @@ def start():
     if not current_user.is_authenticated:
         d = {}
         redirect_url = get_spotify_login_link()
-        d["spotify_link"] = redirect_url.url()
+        d["spotify_link"] = redirect_url.url
         return render_template("start.html", **d)
 
     d = get_data(current_user.spotify_token)

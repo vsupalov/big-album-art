@@ -1,17 +1,78 @@
 <title>Big Album Art for Spotify</title>
 <link href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=" rel="icon" type="image/x-icon" />
+<script>
+window.onload = function() {
+  Particles.init({
+    selector: '.background',
+    color: '#aaaaaa',
+    connectParticles: true,
+    sizeVariations: 4,
+  });
+};
+</script>
 
 <style>
+  html,
   body {
-    background: black;
+    margin: 0;
+    padding: 0;
   }
+  
+  .background {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  body {
+    background: #1c5987;
+  }
+
   .about-container {
-    margin: auto 0px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 9000;
+  }
+
+  .about {
+    max-width: 800px;
+    /*
+    background-color: white;
+    border: 2px solid black;
+    */
+
+    font-size: 20pt;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    text-align: center;
+    
+    padding: 2em;
+  }
+
+  button {
+    margin-top: 1em;
+    font-size: 1.5em;
+    font-weight: 900;
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    cursor: hand;
+    padding: 0.5em;
   }
 </style>
 
+<body>
 <div class="about-container">
+  <div class="about">
   <h1>Big Album Art for Spotify</h1>
   <p>Do you love album art, and are unsatisfied with how tiny it is on your Spotify app or desktop client? Log in below, to see the album art of your currently playing Spotify song.</p>
   <button href="{{spotify_link}}">Login with Spotify</button>
 </div>
+<canvas class="background"></canvas>
+<script src="https://npmcdn.com/particlesjs@2.0.2/dist/particles.min.js"></script>
+</body>
