@@ -80,7 +80,7 @@ def resetdb_command():
     db.create_all()
     print('Shiny!')
 
-def go_to_spotify():
+def get_spotify_login_link():
     # https://developer.spotify.com/web-api/authorization-guide/#authorization-code-flow
     data = {
         "client_id": SPOTIFY_CLIENT_ID,
@@ -94,13 +94,17 @@ def go_to_spotify():
     redirect_url = furl(url)
     redirect_url.args = data
 
+def go_to_spotify():
+    redirect_url = get_spotify_login_link()
     return redirect(redirect_url.url)
 
 @app.route("/")
 def start():
     if not current_user.is_authenticated:
-        # redirect to spotify login
-        return go_to_spotify()
+        d = {}
+        redirect_url = get_spotify_login_link()
+        d["spotify_link"] = redirect_url.url()
+        return render_template("start.html", **d)
 
     d = get_data(current_user.spotify_token)
     if d == None:
