@@ -18,9 +18,24 @@ $ pip install -r baa/requirements.txt
 
 ## Develop
 
+Don't forget to set all necessary environment variables (see below).
+
+Run containerized service dependencies with docker-comopose:
+```
+docker-compose up
+```
+Both the database and redis should be up eventually.
+
 Run app with 
 ```
 $ FLASK_APP=baa/main.py flask run
+```
+
+or
+
+```
+$ cd baa
+$ python main.py
 ```
 
 Access it on [localhost](localhost:5000)
@@ -50,6 +65,8 @@ export REDIS_URL="127.0.0.1:6379"
 export LC_ALL="C.UTF-8"
 export LANG="C.UTF-8"
 ```
+
+You can put them at the end of the *bin/activate* file if you are developing locally.
 
 ## Links
 
