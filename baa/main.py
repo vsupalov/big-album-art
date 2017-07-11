@@ -12,6 +12,8 @@ from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user, login_user
 
+from raven.contrib.flask import Sentry
+
 def get_env_variable(name):
     try:
         return os.environ[name]
@@ -30,12 +32,19 @@ SPOTIFY_CLIENT_ID = get_env_variable("SPOTIFY_CLIENT_ID")
 SPOTIFY_CLIENT_SECRET = get_env_variable("SPOTIFY_CLIENT_SECRET")
 SPOTIFY_REDIRECT_URL = get_env_variable("SPOTIFY_REDIRECT_URL")
 
+
+
 SPOTIFY_SCOPES = "user-read-private user-read-email user-read-playback-state user-read-currently-playing"
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'redis'
 app.config['SESSION_REDIS'] = REDIS_URL
 app.secret_key = get_env_variable("SECRET_KEY")
+
+SENTRY_DNS = get_env_variable("SENTRY_DNS")
+sentry = None
+if SENTRY_DNS != "nope":
+    sentry = Sentry(app, dsn=SENTRY_DNS)
 
 DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=POSTGRES_USER,pw=POSTGRES_PW,url=POSTGRES_URL,db=POSTGRES_DB)
 
