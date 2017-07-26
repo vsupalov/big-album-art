@@ -27,7 +27,7 @@ script:
   - py.test
 
 after_success:
-  - codecovv
+  - codecov
 
 env:
   global:
