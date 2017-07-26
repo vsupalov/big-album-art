@@ -195,7 +195,7 @@ def login_callback():
 
     return redirect("/")
 
-def test_noop():
+def noop_test():
     assert 1 == 1
 
 if __name__ == "__main__":
