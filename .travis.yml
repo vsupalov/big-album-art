@@ -17,8 +17,8 @@ addons:
 #  - docker-compose -f docker-compose.yml up
 
 install:
-  - cd baa; pip install --user -r requirements.txt
-  - pip install --user codecov
+  - cd baa; pip install -r requirements.txt
+  - pip install codecov
 #  - pip install py.test
 
 script: cd baa; py.test
