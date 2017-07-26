@@ -195,6 +195,9 @@ def login_callback():
 
     return redirect("/")
 
+def test_noop():
+    assert 1 == 1
+
 if __name__ == "__main__":
     app.debug = True
     app.run()

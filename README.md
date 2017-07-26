@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/th4t/big-album-art.svg?branch=master)](https://travis-ci.org/th4t/big-album-art)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENCE)
 
 # big-album-art
 A Flask app to display almost-fullscreen album art for your currently playing Spotify songs. Enjoy the visuals!
