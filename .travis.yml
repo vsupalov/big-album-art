@@ -21,8 +21,10 @@ install:
   - pip install pytest
   - pip install codecov
 
+before_script:
+  - source env.example
 script:
-  - source env.example && py.test
+  - py.test
 
 after_success:
   - codecovv
