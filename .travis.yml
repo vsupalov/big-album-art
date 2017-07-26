@@ -30,14 +30,17 @@ after_success:
   - codecovv
 
 env:
-  - SPOTIFY_CLIENT_ID="???" #adjust the '???' part for it to work
+  # if an env var is set here, and in the project settings, THIS has precedence
+  # https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings
+  # TODO: those need to go into the settings
+  - SPOTIFY_CLIENT_ID="???"
   - SPOTIFY_CLIENT_SECRET="???"
   - SPOTIFY_REDIRECT_URL="http://localhost:5000/callback"
   - SECRET_KEY="super secret key"
   - POSTGRES_URL="127.0.0.1:5432"
   - POSTGRES_USER="postgres"
-  - POSTGRES_PW="dbpw"
-  - POSTGRES_DB="test"
+  - POSTGRES_PW=""
+  - POSTGRES_DB="postgres"
   - REDIS_URL="127.0.0.1:6379"
   - SENTRY_DNS="nope"
   - LC_ALL="C.UTF-8"
