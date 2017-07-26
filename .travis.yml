@@ -22,7 +22,7 @@ install:
   - pip install codecov
 
 #before_script:
-#  - source env.example
+#  - source ../env.example
 script:
   - py.test
 
