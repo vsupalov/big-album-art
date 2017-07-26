@@ -52,7 +52,7 @@ $ pip freeze --local > baa/requirements.txt
 
 ## Env Variables
 
-To get the app running, be sure to set variables as defined in the *env.example* file.
+To get the app running, be sure to set variables as defined in the *[env.example](env.example)* file.
 
 For deveolpment, you can append them at the end of the *bin/activate* file of your virtualenv.
 
