@@ -18,10 +18,11 @@ addons:
 
 install:
   - cd baa; pip install -r requirements.txt
+  - pip install pytest
   - pip install codecov
-#  - pip install py.test
 
-script: cd baa; py.test
+script:
+  - py.test
 
 after_success:
   - codecovv
