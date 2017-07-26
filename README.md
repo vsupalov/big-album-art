@@ -4,6 +4,8 @@
 # big-album-art
 A Flask app to display almost-fullscreen album art for your currently playing Spotify songs. Enjoy the visuals!
 
+Live at [baa.vsupalov.com](http://baa.vsupalov.com).
+Case study project of a [blogpost series](http://vsupalov.com/flask-app-big-album-art/) on developing a real-life web application.
 Work in progress.
 
 ## Setup
