@@ -52,26 +52,9 @@ $ pip freeze --local > baa/requirements.txt
 
 ## Env Variables
 
-To get the app running, be sure to set following variables:
-```
-export SPOTIFY_CLIENT_ID="???" #adjust the '???' part for it to work
-export SPOTIFY_CLIENT_SECRET="???"
-export SPOTIFY_REDIRECT_URL="http://localhost:5000/callback"
-export SECRET_KEY="super secret key"
+To get the app running, be sure to set variables as defined in the *env.example* file.
 
-export POSTGRES_URL="127.0.0.1:5432"
-export POSTGRES_USER="postgres"
-export POSTGRES_PW="dbpw"
-export POSTGRES_DB="test"
-export REDIS_URL="127.0.0.1:6379"
-
-export SENTRY_DNS="nope"
-
-export LC_ALL="C.UTF-8"
-export LANG="C.UTF-8"
-```
-
-You can put them at the end of the *bin/activate* file if you are developing locally.
+For deveolpment, you can append them at the end of the *bin/activate* file of your virtualenv.
 
 ## Links
 
