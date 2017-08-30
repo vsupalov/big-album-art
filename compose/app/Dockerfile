@@ -6,8 +6,8 @@ RUN apt-get update -qq && \
 RUN apt-get install -qqy \
     python-virtualenv \
     libpq-dev \
-    python3 \
-    python3-dev
+    python3=3.5.* \
+    python3-dev=3.5.*
 
 #RUN useradd app
 
