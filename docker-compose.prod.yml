@@ -25,5 +25,5 @@ services:
     working_dir: /srv/app
     env_file:
       - .env
-    ports: #make redis accessible locally
+    ports:
       - "127.0.0.1:9020:8000"

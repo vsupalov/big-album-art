@@ -3,8 +3,26 @@ version: '2'
 volumes:
   # for persistence between restarts
   postgres_data: {}
+  env: {}
 
 services:
+  app:
+    build: ./compose/app_dev
+    volumes:
+      - ./baa:/srv/app
+      - env:/srv/env
+    working_dir: /srv/app
+    env_file:
+      - env_dev
+      - env_dev_secret
+    ports:
+      - "127.0.0.1:5000:5000"
+    depends_on:
+      - db
+      - redis
+    # uncomment for debugging
+    # with docker-compose exec app bash
+    #entrypoint: ["sh", "-c", "sleep infinity"]
   db:
     #https://hub.docker.com/_/postgres/
     image: postgres:9.6.3
