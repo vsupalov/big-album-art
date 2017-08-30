@@ -72,6 +72,11 @@ class User(db.Model):
 def load_user(user_id):
     return User.query.filter_by(spotify_id=user_id).first()
 
+@app.cli.command('listusers')
+def listusers_command():
+    for user in User.query.all():
+        print(user.spotify_id)
+
 @app.cli.command('resetdb')
 def resetdb_command():
     """Destroys and creates the database + tables."""
