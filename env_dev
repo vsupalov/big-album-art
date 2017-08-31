@@ -1,0 +1,15 @@
+SPOTIFY_CLIENT_ID=??? #TODO: create a env_dev_secret file and put the values there - not in git
+SPOTIFY_CLIENT_SECRET=???
+SPOTIFY_REDIRECT_URL=http://localhost:5000/callback
+SECRET_KEY=super secret key
+
+POSTGRES_URL=db:5432
+POSTGRES_USER=postgres
+POSTGRES_PW=dbpw
+POSTGRES_DB=test
+REDIS_URL=redis:6379
+
+SENTRY_DNS=nope
+
+LC_ALL=C.UTF-8
+LANG=C.UTF-8
