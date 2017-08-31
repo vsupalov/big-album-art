@@ -189,6 +189,7 @@ def login_callback():
     else:
         user = User(spotify_id=spotify_id, spotify_token=token)
     db.session.add(user)
+    db.session.flush()
     db.session.commit()
 
     login_user(user)
