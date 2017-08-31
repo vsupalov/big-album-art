@@ -55,6 +55,9 @@ db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 
 class User(db.Model):
+    __tablename__ = "users" #not specifying this, lead to the table *not* being created. Duh.
+    # postgres already has a 'user' table by default... Something went wrong here! (no errors)
+
     id = db.Column(db.Integer, primary_key=True)
     spotify_id = db.Column(db.String(200), unique=False, nullable=True)
     spotify_token = db.Column(db.String(200), unique=False, nullable=True)
@@ -76,6 +79,18 @@ def load_user(user_id):
 def listusers_command():
     for user in User.query.all():
         print(user.spotify_id)
+
+@app.cli.command('createdb')
+def createdb_command():
+    """Creates the database + tables."""
+    from sqlalchemy_utils import database_exists, create_database
+
+    if not database_exists(DB_URL):
+        print('Creating database.')
+        create_database(DB_URL)
+    print('Creating tables.')
+    db.create_all()
+    print('Shiny!')
 
 @app.cli.command('resetdb')
 def resetdb_command():
@@ -193,8 +208,10 @@ def login_callback():
         user.spotify_token = token
     else:
         user = User(spotify_id=spotify_id, spotify_token=token)
+        print("Creating user! {}".format(spotify_id))
+
     db.session.add(user)
-    db.session.flush()
+    #db.session.flush()
     db.session.commit()
 
     login_user(user)

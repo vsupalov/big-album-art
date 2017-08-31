@@ -15,6 +15,9 @@ RUN mkdir -p /srv
 ADD start.sh /srv/start.sh
 RUN chmod +x /srv/start.sh
 
+ADD maintenance.sh /srv/maintenance.sh
+RUN chmod +x /srv/maintenance.sh
+
 #RUN chown -R app:app /srv
 #USER app
 
