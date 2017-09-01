@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/th4t/big-album-art.svg?branch=master)](https://travis-ci.org/th4t/big-album-art)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENCE)
 
-# big-album-art
+# Big Album Art
 A Flask app to display almost-fullscreen album art for your currently playing Spotify songs. Enjoy the visuals!
 
 Live at [baa.vsupalov.com](http://baa.vsupalov.com).
@@ -31,10 +31,25 @@ See the Dockerfile in *compose/app_dev* for installed
 packages. The *start.sh* file in the same directory
 performs all necessary steps to run the app in dev mode.
 
-## Add New Dependencies
+### Run Flask Admin Commands
 ```
 # go into the docker container and enter the virtualenv
-$ make go_to_app
+$ make go_into_app
+$ source /srv/maintenance.sh
+
+# do stuff
+$ flask resetdb
+```
+
+### Interact Directly With The Database
+```
+$ make go_into_db
+```
+
+### Add New Dependencies
+```
+# go into the docker container and enter the virtualenv
+$ make go_into_app
 $ source /srv/maintenance.sh
 
 # install new pip modules in the venv here
