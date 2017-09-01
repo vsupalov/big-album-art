@@ -8,55 +8,40 @@ Live at [baa.vsupalov.com](http://baa.vsupalov.com).
 Case study project of a [blogpost series](http://vsupalov.com/flask-app-big-album-art/) on developing a real-life web application.
 Work in progress.
 
-## Setup
-Use Python 3.5.2
+## Development Setup
+You need to install Docker, and docker-compose.
 
-On Ubuntu 16.04 you'll need the following additional packages:
-* libpq-dev
-* python-dev
-* (maybe some more)
+Copy the *env_dev* file to *env_dev_secret*, and insert your
+Spotify app key and secret.
+That file is not tracked by git.
+You can create an app [here](https://developer.spotify.com/my-applications/).
 
-Install python dependencies with, preferably in a virtualenv
-```
-$ pip install -r baa/requirements.txt
-```
-
-## Develop
-
-Don't forget to set all necessary environment variables (see below).
-
-Run containerized service dependencies with docker-comopose:
-```
-docker-compose up
-```
-Both the database and redis should be up eventually.
-
-Run app with 
-```
-$ FLASK_APP=baa/main.py flask run
-```
-
-or
+Bringing up a development environment
+from the repository consists of the following commands:
 
 ```
-$ cd baa
-$ python main.py
+$ docker-compose build
+$ docker-compose up
 ```
 
 Access it on [localhost](localhost:5000)
 
+For curiosity or to start working on the app without Docker:
+See the Dockerfile in *compose/app_dev* for installed
+packages. The *start.sh* file in the same directory
+performs all necessary steps to run the app in dev mode.
+
 ## Add New Dependencies
-
 ```
-# install em with pip in the venv
-$ pip freeze --local > baa/requirements.txt
+# go into the docker container and enter the virtualenv
+$ make go_to_app
+$ source /srv/maintenance.sh
+
+# install new pip modules in the venv here
+
+# save them
+$ pip freeze --local > requirements.txt
 ```
-
-## Env Variables
-
-To get the app running, be sure to set variables as defined in the *[env.example](env.example)* file.
-
-For deveolpment, you can append them at the end of the *bin/activate* file of your virtualenv.
 
 ## Links
 
