@@ -58,6 +58,20 @@ $ source /srv/maintenance.sh
 $ pip freeze --local > requirements.txt
 ```
 
+### The App Container Crashes - How Do I Find Out What's Wrong?
+It tries to start the dev server right away for convenience.
+If that crashes for some reason, the container stops as well.
+Here's what you need to be able to debug it in such a case.
+
+Uncomment the 'entrypoint' line in the docker-compose.yml file,
+bring the stack down and up again. Now the container is running,
+and you can exec into it and fix the issue, so it works again.
+```
+# go into the docker container and enter the virtualenv
+$ make go_into_app
+$ source /srv/maintenance.sh
+```
+
 ## Links
 
 Used:
