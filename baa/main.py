@@ -160,6 +160,8 @@ def get_data(spotify_token):
     url = "https://api.spotify.com/v1/me/player/currently-playing"
     headers = {'Authorization': "Bearer {}".format(spotify_token)}
     r = requests.get(url, headers=headers)
+    # TODO: the above can return a 204, and I'm not handling that
+    # --> caching previous responses is a good idea
     parsed = json.loads(r.text)
 
     # check if the token is still valid
