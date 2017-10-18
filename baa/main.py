@@ -32,8 +32,6 @@ SPOTIFY_CLIENT_ID = get_env_variable("SPOTIFY_CLIENT_ID")
 SPOTIFY_CLIENT_SECRET = get_env_variable("SPOTIFY_CLIENT_SECRET")
 SPOTIFY_REDIRECT_URL = get_env_variable("SPOTIFY_REDIRECT_URL")
 
-
-
 SPOTIFY_SCOPES = "user-read-private user-read-email user-read-playback-state user-read-currently-playing"
 
 app = Flask(__name__)
@@ -134,6 +132,7 @@ def start():
         d = {}
         redirect_url = get_spotify_login_link()
         d["spotify_link"] = redirect_url.url
+        d["piwik_on"] = os.environ.get("PIWIK_ON", False)
         return render_template("start.html", **d)
 
     d = get_data(current_user.spotify_token)
