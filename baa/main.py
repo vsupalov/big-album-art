@@ -10,7 +10,7 @@ from flask import redirect, request
 from flask import render_template
 
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, current_user, login_user
+from flask_login import LoginManager, current_user, login_user, logout_user
 
 from raven.contrib.flask import Sentry
 
@@ -125,6 +125,13 @@ def get_spotify_login_link():
 def go_to_spotify():
     redirect_url = get_spotify_login_link()
     return redirect(redirect_url.url)
+
+@app.route("/logout/")
+def logout():
+    if current_user.is_authenticated:
+        logout_user(current_user)
+
+    return redirect("/")
 
 @app.route("/")
 def start():
