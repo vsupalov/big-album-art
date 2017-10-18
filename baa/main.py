@@ -10,9 +10,11 @@ from flask import redirect, request
 from flask import render_template
 
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, current_user, login_user, logout_user
+from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 
 from raven.contrib.flask import Sentry
+
+import datetime
 
 def get_env_variable(name):
     try:
@@ -131,6 +133,14 @@ def logout():
     if current_user.is_authenticated:
         logout_user(current_user)
 
+        log_info = {
+            "user_id": current_user.id,
+            "spotify_id": current_user.spotify_id,
+            "timestamp": datetime.datetime.utcnow().isoformat(),
+            "action": "logout",
+        }
+        app.logger.info(json.dumps(log_info))
+
     return redirect("/")
 
 @app.route("/")
@@ -160,6 +170,8 @@ def get_data(spotify_token):
     url = "https://api.spotify.com/v1/me/player/currently-playing"
     headers = {'Authorization': "Bearer {}".format(spotify_token)}
     r = requests.get(url, headers=headers)
+    # TODO: the above can return a 204, and I'm not handling that
+    # --> caching previous responses is a good idea
     parsed = json.loads(r.text)
 
     # check if the token is still valid
@@ -180,6 +192,28 @@ def get_data(spotify_token):
         "track_is_playing": parsed["is_playing"],
         "track_uri": parsed["item"]["uri"],
     }
+
+@app.route("/track/reload/")
+@login_required
+def tick_callback():
+    log_info = {
+        "user_id": current_user.id,
+        "spotify_id": current_user.spotify_id,
+        "timestamp": datetime.datetime.utcnow().isoformat(),
+        "action": "reload",
+    }
+    app.logger.info(json.dumps(log_info))
+
+@app.route("/track/tick-5m/")
+@login_required
+def reload_callback():
+    log_info = {
+        "user_id": current_user.id,
+        "spotify_id": current_user.spotify_id,
+        "timestamp": datetime.datetime.utcnow().isoformat(),
+        "action": "tick-5m",
+    }
+    app.logger.info(json.dumps(log_info))
 
 @app.route("/callback/")
 def login_callback():
@@ -221,6 +255,14 @@ def login_callback():
     db.session.commit()
 
     login_user(user)
+
+    log_info = {
+        "user_id": current_user.id,
+        "spotify_id": current_user.spotify_id,
+        "timestamp": datetime.datetime.utcnow().isoformat(),
+        "action": "login",
+    }
+    app.logger.info(json.dumps(log_info))
 
     return redirect("/")
 
