@@ -129,8 +129,9 @@ def go_to_spotify():
     return redirect(redirect_url.url)
 
 @app.route("/logout/")
+@login_required
 def logout():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated():
         logout_user()
 
         log_info = {
@@ -145,7 +146,7 @@ def logout():
 
 @app.route("/")
 def start():
-    if not current_user.is_authenticated:
+    if not current_user.is_authenticated():
         d = {}
         redirect_url = get_spotify_login_link()
         d["spotify_link"] = redirect_url.url
