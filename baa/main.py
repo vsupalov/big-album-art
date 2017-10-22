@@ -132,8 +132,6 @@ def go_to_spotify():
 @login_required
 def logout():
     if current_user.is_authenticated:
-        logout_user()
-
         log_info = {
             "user_id": current_user.id,
             "spotify_id": current_user.spotify_id,
@@ -141,6 +139,7 @@ def logout():
             "action": "logout",
         }
         app.logger.info(json.dumps(log_info))
+        logout_user()
 
     return redirect("/")
 
