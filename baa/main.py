@@ -131,7 +131,7 @@ def go_to_spotify():
 @app.route("/logout/")
 def logout():
     if current_user.is_authenticated:
-        logout_user(current_user)
+        logout_user()
 
         log_info = {
             "user_id": current_user.id,
