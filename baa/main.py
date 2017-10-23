@@ -171,7 +171,14 @@ def get_data(spotify_token):
     headers = {'Authorization': "Bearer {}".format(spotify_token)}
     r = requests.get(url, headers=headers)
     # TODO: the above can return a 204, and I'm not handling that
-    # --> caching previous responses is a good idea
+    # --> caching previous responses is a good idea?
+
+    if r.status_code == 204:
+        return {
+            "error": "nothing_playing",
+            "nothing_playing": True
+        }
+
     parsed = json.loads(r.text)
 
     # check if the token is still valid

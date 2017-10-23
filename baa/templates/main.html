@@ -56,7 +56,10 @@
     // check every second if the current track changed/is still playing?
     var check_for_change = function() {
       $.get("/current", "", function(data) {
-        if (data.error === "relogin") {
+        if (data.error === "nothing_playing") {
+            //TODO: handle that nothing is playing right now
+            return;
+        } else if (data.error === "relogin") {
           reload();
         }
 
