@@ -158,6 +158,26 @@ def start():
 
     return render_template("main.html", **d)
 
+def get_fake_data():
+    return {
+      "img_src": "https://vsupalov.com/images/avatar.png",
+
+      #"artists": "Nobody",
+      "artist_names_string": "Nobody",
+      "album_name": "Album",
+      "track_name": "Track",
+
+      "track_ms_total": 100,
+      "track_ms_progress": 20,
+      "track_is_playing": True,
+      "track_uri": "some uri",
+    }
+
+@app.route("/api/current/")
+def api_current():
+    d = get_fake_data()
+    return json.dumps(d)
+
 @app.route("/current/")
 def current():
     d = get_data(current_user.spotify_token)
@@ -200,9 +220,9 @@ def get_data(spotify_token):
         "track_uri": parsed["item"]["uri"],
     }
 
-@app.route("/track/reload/")
-@login_required
-def tick_callback():
+@app.route("/api/track/load/")
+#@login_required
+def load_callback():
     log_info = {
         "user_id": current_user.id,
         "spotify_id": current_user.spotify_id,
@@ -211,9 +231,9 @@ def tick_callback():
     }
     app.logger.info(json.dumps(log_info))
 
-@app.route("/track/tick-5m/")
-@login_required
-def reload_callback():
+@app.route("/api/track/tick-5m/")
+#@login_required
+def tick_callback():
     log_info = {
         "user_id": current_user.id,
         "spotify_id": current_user.spotify_id,
