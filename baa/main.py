@@ -158,6 +158,36 @@ def start():
 
     return render_template("main.html", **d)
 
+@app.route("/artist/<string:artist_id>")
+@login_required
+def artist(artist_id):
+    # get albums of artist
+    spotify_token = current_user.spotify_token
+    url = "https://api.spotify.com/v1/artists/{}/albums".format(artist_id)
+    headers = {'Authorization': "Bearer {}".format(spotify_token)}
+    r = requests.get(url, headers=headers)
+    # TODO: the above can return a 204, and I'm not handling that
+    # --> caching previous responses is a good idea?
+
+    if r.status_code == 204:
+        return "whoops"
+
+    parsed = json.loads(r.text)
+
+    # check if the token is still valid
+    if parsed.get("items", None) == None:
+        return "uh oh"
+    
+    # TODO this is all kinds of terrible, and also we're not going through all pages
+    album_data = map(lambda x: {"image_url": x["images"][0]["url"]}, parsed["items"])
+
+    # TODO: go through all pages, add if it's a single, an album or a compilation (or something?)
+    # add year
+    # vue.js-up this project
+
+    d = {"albums": album_data}
+    return render_template("artist.html", **d)
+
 def get_fake_data():
     return {
       "img_src": "https://vsupalov.com/images/avatar.png",
@@ -210,7 +240,7 @@ def get_data(spotify_token):
     return {
         "img_src": img_src,
 
-        "artists": list(map(lambda x: {"name": x["name"]}, parsed["item"]["artists"])),
+        "artists": list(map(lambda x: {"name": x["name"], "id": x["id"]}, parsed["item"]["artists"])),
         "album_name": parsed["item"]["album"]["name"],
         "track_name": parsed["item"]["name"],
 
@@ -221,7 +251,7 @@ def get_data(spotify_token):
     }
 
 @app.route("/api/track/load/")
-#@login_required
+@login_required
 def load_callback():
     log_info = {
         "user_id": current_user.id,
@@ -232,7 +262,7 @@ def load_callback():
     app.logger.info(json.dumps(log_info))
 
 @app.route("/api/track/tick-5m/")
-#@login_required
+@login_required
 def tick_callback():
     log_info = {
         "user_id": current_user.id,
