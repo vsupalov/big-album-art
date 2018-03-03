@@ -1,0 +1,8 @@
+<span>Count: {{ albums | length }}</span>
+{% for album in albums %}
+  <div>
+    <img src="{{album.image_url}}">
+    <span>{{album.release_date}}, <a href="{{album.spotify_url}}">goto</a></span>
+
+  </div>
+{% endfor %}

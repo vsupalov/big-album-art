@@ -163,29 +163,51 @@ def start():
 def artist(artist_id):
     # get albums of artist
     spotify_token = current_user.spotify_token
-    url = "https://api.spotify.com/v1/artists/{}/albums".format(artist_id)
-    headers = {'Authorization': "Bearer {}".format(spotify_token)}
-    r = requests.get(url, headers=headers)
-    # TODO: the above can return a 204, and I'm not handling that
-    # --> caching previous responses is a good idea?
 
-    if r.status_code == 204:
-        return "whoops"
+    items = []
 
-    parsed = json.loads(r.text)
+    done = False
+    offset = 0
 
-    # check if the token is still valid
-    if parsed.get("items", None) == None:
-        return "uh oh"
-    
-    # TODO this is all kinds of terrible, and also we're not going through all pages
-    album_data = map(lambda x: {"image_url": x["images"][0]["url"]}, parsed["items"])
+    while not done:
+        url = "https://api.spotify.com/v1/artists/{}/albums?limit=50&offset={}".format(artist_id, offset)
+        headers = {'Authorization': "Bearer {}".format(spotify_token)}
+        r = requests.get(url, headers=headers)
 
-    # TODO: go through all pages, add if it's a single, an album or a compilation (or something?)
-    # add year
-    # vue.js-up this project
+        if r.status_code == 204:
+            return "whoops 204"
 
-    d = {"albums": album_data}
+        parsed = json.loads(r.text)
+
+        # check if the token is still valid
+        if parsed.get("items", None) == None:
+            return "uh oh no items"
+
+        items.extend(parsed["items"])
+
+        if parsed["next"] is None:
+            done = True
+        else:
+            offset += 50
+
+    # TODO this is all kinds of terrible
+    album_data = list(map(lambda x: {
+        "image_url": x["images"][0]["url"],
+        "release_date": x.get("release_date", "?"),
+        "spotify_url": x["external_urls"].get("spotify", "?"),
+        "type": x["album_type"],
+    }, items))
+
+    album_data.sort(key=lambda x: x["release_date"])
+ 
+    d = {
+        "albums": list(filter(lambda x: x["type"] == "album", album_data)),
+        "singles": list(filter(lambda x: x["type"] == "single", album_data)),
+        "compilations": list(filter(lambda x: x["type"] == "compilation", album_data)),
+        "other": list(filter(lambda x: x["type"] not in ("album", "single", "compilation"), album_data)),
+        "count": len(album_data),
+    }
+    # TODO: vue.js-up?
     return render_template("artist.html", **d)
 
 def get_fake_data():

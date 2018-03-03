@@ -77,7 +77,7 @@ $ source /srv/maintenance.sh
 Used:
 * http://flask-sqlalchemy.pocoo.org/2.1/
 * https://flask-login.readthedocs.io/en/latest/
-* https://developer.spotify.com/web-api/
+* https://developer.spotify.com/web-api/endpoint-reference/
 * https://developer.spotify.com/web-api/authorization-guide/
 
 Maybe someday:

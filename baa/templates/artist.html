@@ -1,5 +1,23 @@
 <title>Big Album Art for Spotify</title>
 
-{% for album in albums %}
-  <img src="{{album.image_url}}">
-{% endfor %}
+Total count: {{count}}
+
+<h1>Albums</h1>
+{% with albums = albums %}
+{% include "_album_block.html" %}
+{% endwith %}
+
+<h1>Singles</h1>
+{% with albums = singles %}
+{% include "_album_block.html" %}
+{% endwith %}
+
+<h1>Compilations</h1>
+{% with albums = compilations %}
+{% include "_album_block.html" %}
+{% endwith %}
+
+<h1>Other</h1>
+{% with albums = other %}
+{% include "_album_block.html" %}
+{% endwith %}
