@@ -27,12 +27,18 @@
   .meta a {
     font-size: 1em;
   }
+
+  .loupe img {
+    width: 400%;
+    height: 400%;
+  }
 </style>
 
 <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
+<script src="/static/jquery.loupe.min.js"></script>
 <script>
   $(document).ready(function() {
     var CHANGE_CHECK_DELAY = 1000;
@@ -40,6 +46,8 @@
     var track_is_playing = {{track_is_playing|lower}};
     var track_ms_total = {{track_ms_total}};
     var track_ms_progress = {{track_ms_progress}};
+
+    $('#the-image').loupe({width: 600, height: 600});
 
     var track_uri = "{{track_uri}}";
 
@@ -82,7 +90,7 @@
 
 <div class="container">
   <div class="image">
-    <img src={{img_src}}>
+    <img id="the-image" src={{img_src}}>
   </div>
   <div class="meta">
     <a>{{track_name}} by {% for artist in artists %}{{artist.name}} {% endfor %}({{album_name}})</a>
