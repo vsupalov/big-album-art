@@ -89,6 +89,9 @@ Maybe someday:
 * [x] Sentry for convenient error handling
 * [x] Explanation screen with login button
 
+* [ ] Make zooming feature toggle-able (press space?)
+* [ ] Switch to a smarter frontend (vue.js)
+* [ ] Make the backend less terrible
 * [ ] check if the token has expired with a simple request, handle updating it gracefully
 * [ ] JS makes too many requests - something might be stacking up or carrying over
 * [ ] Maybe switch to using blueprints for the fun of it
