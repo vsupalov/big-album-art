@@ -8,6 +8,7 @@ from flask import Flask
 from flask import session
 from flask import redirect, request
 from flask import render_template
+from flask import url_for
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
@@ -160,7 +161,41 @@ def start():
 
 @app.route("/artist/<string:artist_id>")
 @login_required
-def artist(artist_id):
+def artist_images(artist_id):
+    # get albums of artist
+    spotify_token = current_user.spotify_token
+
+    images = []
+
+    url = "https://api.spotify.com/v1/artists/{}".format(artist_id)
+
+    headers = {'Authorization': "Bearer {}".format(spotify_token)}
+    r = requests.get(url, headers=headers)
+
+    if r.status_code == 204:
+        return "whoops 204"
+
+    parsed = json.loads(r.text)
+
+    if len(parsed.get("images", [])) > 0:
+        images.append(parsed["images"][0])
+
+    # TODO: how to get to the gallery images?
+    # TODO: how to get more visuals of the artist?
+
+    image_data = list(map(lambda x: {
+        "image_url": x["url"],
+    }, images))
+
+    d = {
+        "images": image_data
+    }
+
+    return render_template("artist_images.html", **d)
+
+@app.route("/artist/<string:artist_id>/albums/<string:display_type>")
+@login_required
+def artist_albums(artist_id, display_type):
     # get albums of artist
     spotify_token = current_user.spotify_token
 
@@ -199,16 +234,27 @@ def artist(artist_id):
     }, items))
 
     album_data.sort(key=lambda x: x["release_date"])
- 
-    d = {
-        "albums": list(filter(lambda x: x["type"] == "album", album_data)),
-        "singles": list(filter(lambda x: x["type"] == "single", album_data)),
-        "compilations": list(filter(lambda x: x["type"] == "compilation", album_data)),
-        "other": list(filter(lambda x: x["type"] not in ("album", "single", "compilation"), album_data)),
-        "count": len(album_data),
-    }
-    # TODO: vue.js-up?
-    return render_template("artist.html", **d)
+
+    if display_type == "categories" or display_type == "":
+        d = {
+            "albums": list(filter(lambda x: x["type"] == "album", album_data)),
+            "singles": list(filter(lambda x: x["type"] == "single", album_data)),
+            "compilations": list(filter(lambda x: x["type"] == "compilation", album_data)),
+            "other": list(filter(lambda x: x["type"] not in ("album", "single", "compilation"), album_data)),
+            "count": len(album_data),
+            "other_url": url_for("artist_albums", artist_id=artist_id, display_type="chronological"),
+        }
+        # TODO: vue.js-up?
+        return render_template("artist_albums_categories.html", **d)
+
+    else:
+        d = {
+            "albums": album_data,
+            "count": len(album_data),
+            "other_url": url_for("artist_albums", artist_id=artist_id, display_type="categories"),
+        }
+        # TODO: vue.js-up?
+        return render_template("artist_albums_chronological.html", **d)
 
 def get_fake_data():
     return {

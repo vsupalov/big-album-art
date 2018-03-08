@@ -1,0 +1,9 @@
+<title>Big Album Art for Spotify</title>
+<a href="/">back to live view</a>
+<a href="{{other_url}}">categories view</a>
+
+<h1>All related records (chronological)</h1>
+
+{% with albums = albums %}
+{% include "_album_block.html" %}
+{% endwith %}
