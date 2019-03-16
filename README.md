@@ -1,12 +1,11 @@
 [![Build Status](https://travis-ci.org/th4t/big-album-art.svg?branch=master)](https://travis-ci.org/th4t/big-album-art)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENCE)
 
-# Big Album Art
+# Big Album Art (2017)
 A Flask app to display almost-fullscreen album art for your currently playing Spotify songs. Enjoy the visuals!
 
-Live at [baa.vsupalov.com](http://baa.vsupalov.com).
-Case study project of a [blogpost series](http://vsupalov.com/flask-app-big-album-art/) on developing a real-life web application.
-Work in progress.
+This project was started with minimal effort, and has since been **retired**.
+A lot of bad patterns in here, which have not been corrected.
 
 ## Development Setup
 You need to install Docker, and docker-compose.
@@ -82,19 +81,3 @@ Used:
 
 Maybe someday:
 * https://flask-admin.readthedocs.io/en/latest/
-
-## TODOs
-
-* [x] Travis CI
-* [x] Sentry for convenient error handling
-* [x] Explanation screen with login button
-
-* [ ] Make zooming feature toggle-able (press space?)
-* [ ] Switch to a smarter frontend (vue.js)
-* [ ] Make the backend less terrible
-* [ ] check if the token has expired with a simple request, handle updating it gracefully
-* [ ] JS makes too many requests - something might be stacking up or carrying over
-* [ ] Maybe switch to using blueprints for the fun of it
-* [ ] Admin interface for the same reason
-* [ ] Proper testing
-* [ ] Useful logging
